@@ -75,7 +75,7 @@ if fleets_active():
 
     admin.site.register(FleetSignal, FleetSignalAdmin)
 
-if hr_active():
+if hr_active() or hr_two_active():
     class HRSignalAdmin(admin.ModelAdmin):
         list_display=('get_webhook','corporation')
         raw_id_fields = ['corporation']

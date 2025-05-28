@@ -23,5 +23,8 @@ def timers_active():
 def hr_active():
     return apps.is_installed('allianceauth.hrapplications')
 
+def hr_two_active():
+    return apps.is_installed('hrapplications_two')
+
 def srp_active():
     return apps.is_installed('allianceauth.srp')

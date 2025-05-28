@@ -35,6 +35,11 @@ if hr_active():
         Application, ApplicationComment,
     )
 
+if hr_two_active():
+    from hrapplications_two.models import (
+        Application, ApplicationComment,
+    )    
+
 if fleets_active():
     from allianceauth.optimer.models import OpTimer
 
@@ -429,7 +434,7 @@ if fleets_active():
             pass  # shits fucked... Don't worry about it...
 
 
-if hr_active():
+if hr_active() or hr_two_active():
     @receiver(post_save, sender=Application)
     def application_saved(sender, instance, created, **kwargs):
         try:
@@ -484,7 +489,7 @@ if hr_active():
             logger.error(e)
             pass  # shits fucked... Don't worry about it...
 
-if hr_active():
+if hr_active() or hr_two_active():
     @receiver(post_save, sender=ApplicationComment)
     def comment_saved(sender, instance, created, update_fields, **kwargs):
         try:
