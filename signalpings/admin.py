@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .app_settings import fleets_active, hr_active, srp_active, timers_active
+from .app_settings import fleets_active, hr_active, hr_two_active, srp_active, timers_active
 from .models import (
     CharacterSignal, FleetSignal, GroupSignal, HRAppSignal, SRPSignal,
     StateSignal, TimerSignal, WebHook,
@@ -75,7 +75,7 @@ if fleets_active():
 
     admin.site.register(FleetSignal, FleetSignalAdmin)
 
-if hr_active():
+if hr_active() or hr_two_active():
     class HRSignalAdmin(admin.ModelAdmin):
         list_display=('get_webhook','corporation')
         raw_id_fields = ['corporation']

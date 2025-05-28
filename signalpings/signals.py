@@ -16,7 +16,7 @@ from allianceauth.groupmanagement.models import GroupRequest
 from allianceauth.services.hooks import get_extension_logger
 
 from .app_settings import (
-    fleets_active, get_site_url, hr_active, srp_active, timers_active,
+    fleets_active, get_site_url, hr_active, hr_two_active, srp_active, timers_active,
 )
 from .helpers import time_helpers
 from .models import (
@@ -34,6 +34,11 @@ if hr_active():
     from allianceauth.hrapplications.models import (
         Application, ApplicationComment,
     )
+
+if hr_two_active():
+    from hrapplications_two.models import (
+        Application, ApplicationComment,
+    )    
 
 if fleets_active():
     from allianceauth.optimer.models import OpTimer
@@ -429,7 +434,7 @@ if fleets_active():
             pass  # shits fucked... Don't worry about it...
 
 
-if hr_active():
+if hr_active() or hr_two_active():
     @receiver(post_save, sender=Application)
     def application_saved(sender, instance, created, **kwargs):
         try:
@@ -484,7 +489,7 @@ if hr_active():
             logger.error(e)
             pass  # shits fucked... Don't worry about it...
 
-if hr_active():
+if hr_active() or hr_two_active():
     @receiver(post_save, sender=ApplicationComment)
     def comment_saved(sender, instance, created, update_fields, **kwargs):
         try:
