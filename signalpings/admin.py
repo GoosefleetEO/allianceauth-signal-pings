@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .app_settings import fleets_active, hr_active, srp_active, timers_active
+from .app_settings import fleets_active, hr_active, hr_two_active, srp_active, timers_active
 from .models import (
     CharacterSignal, FleetSignal, GroupSignal, HRAppSignal, SRPSignal,
     StateSignal, TimerSignal, WebHook,

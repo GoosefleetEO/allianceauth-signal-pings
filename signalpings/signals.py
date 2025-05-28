@@ -16,7 +16,7 @@ from allianceauth.groupmanagement.models import GroupRequest
 from allianceauth.services.hooks import get_extension_logger
 
 from .app_settings import (
-    fleets_active, get_site_url, hr_active, srp_active, timers_active,
+    fleets_active, get_site_url, hr_active, hr_two_active, srp_active, timers_active,
 )
 from .helpers import time_helpers
 from .models import (
