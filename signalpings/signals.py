@@ -77,7 +77,7 @@ def group_change(sender, instance, action, reverse, model, pk_set, **kwargs):
             if action == 'post_add':
                 embed = {
                     'title': "Group Joined",
-                    'description': f"From **{main_char.character_name}** joined **{group.name}**",
+                    'description': f"**{main_char.character_name}** joined **{group.name}**",
                     'color': BLUE,
                     'image': {'url': main_char.portrait_url_128},
                     "footer": {
@@ -88,7 +88,7 @@ def group_change(sender, instance, action, reverse, model, pk_set, **kwargs):
             else:
                 embed = {
                     'title': "Group Left",
-                    'description': f"From **{main_char.character_name}** left **{group.name}**",
+                    'description': f"**{main_char.character_name}** left **{group.name}**",
                     'color': BLUE,
                     'image': {'url': main_char.portrait_url_128},
                     "footer": {
@@ -101,7 +101,7 @@ def group_change(sender, instance, action, reverse, model, pk_set, **kwargs):
                     hook.webhook.send_embed(embed)            
 
     except Exception as e:
-        logger.error(e, exc_info=True)
+        logger.error(e)
         pass  # shits fucked... Don't worry about it...
 
 
