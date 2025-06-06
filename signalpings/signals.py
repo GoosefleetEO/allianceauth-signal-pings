@@ -114,10 +114,10 @@ def new_character(sender, instance, created, **kwargs):
                 'title': "New Character Registered",
                 'color': GREEN,
                 'description': "[{}]({}) [ [{}]({}) ]\nRegistered\n[{}]({}) [ [{}]({}) ]".format(
-                    main_char if main_char else "Unknown",
-                    character_url(main_char.character_id) if main_char else "Unknown",
-                    main_char.corporation_name if main_char else "Unknown",
-                    corporation_url(main_char.corporation_id) if main_char else "Unknown",
+                    main_char if main_char else instance,
+                    character_url(main_char.character_id) if main_char else "",
+                    main_char.corporation_name if main_char else "",
+                    corporation_url(main_char.corporation_id) if main_char else "",
                     character,
                     character_url(character.character_id),
                     character.corporation_name,
@@ -151,10 +151,10 @@ def removed_character(sender, instance, **kwargs):
             'title': "Character Ownership Lost",
             'color': RED,
             'description': "[{}]({}) [ [{}]({}) ]\nLost Ownership of\n[{}]({}) [ [{}]({}) ]".format(
-                main_char if main_char else "Unknown",
-                character_url(main_char.character_id) if main_char else "Unknown",
-                main_char.corporation_name if main_char else "Unknown",
-                corporation_url(main_char.corporation_id) if main_char else "Unknown",
+                main_char if main_char else instance,
+                character_url(main_char.character_id) if main_char else "",
+                main_char.corporation_name if main_char else "",
+                corporation_url(main_char.corporation_id) if main_char else "",
                 character,
                 character_url(character.character_id),
                 character.corporation_name,
@@ -191,7 +191,7 @@ def state_change(sender, instance, raw, using, update_fields, **kwargs):
             'description': ("**{}** ([{}]({})) \nChanged State to **{}**".format(
                 username,
                 main_char if main_char else "Unknown",
-                character_url(main_char.character_id) if main_char else "Unknown",
+                character_url(main_char.character_id) if main_char else "",
                 state_new)),
             'image': {'url': main_char.portrait_url_128 if main_char else ""},
             'url': url
