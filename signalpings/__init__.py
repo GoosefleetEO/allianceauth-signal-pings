@@ -1,3 +1,3 @@
 default_app_config = 'signalpings.apps.SignalPingsConfig'
 
-__version__ = '0.0.12b5'
+__version__ = '0.0.12b6'

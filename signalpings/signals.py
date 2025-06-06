@@ -74,7 +74,7 @@ def group_change(sender, instance, action, reverse, model, pk_set, **kwargs):
             if not hooks.exists():
                 continue
             
-            if action_ == 'post_add':
+            if action == 'post_add':
                 embed = {
                     'title': "Group Joined",
                     'description': f"From **{main_char.character_name}** joined **{group.name}**",
