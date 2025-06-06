@@ -1,9 +1,10 @@
 import datetime
 
-from django.db.models.signals import post_save, pre_delete
+from django.db.models.signals import post_save, pre_delete, m2m_changed
 from django.dispatch import receiver
 from django.urls import reverse
 from django.utils import timezone
+from django.contrib.auth.models import User, Group
 
 from allianceauth.authentication.models import (
     CharacterOwnership, EveCharacter, UserProfile,
@@ -48,6 +49,60 @@ if timers_active():
 
 if srp_active():
     from allianceauth.srp.models import SrpUserRequest
+
+
+@receiver(m2m_changed, sender=User.groups.through)
+def group_change(sender, instance, action, reverse, model, pk_set, **kwargs):
+    if action not in ['post_add','post_remove']:
+        return
+
+    try:
+        main_char = instance.profile.main_character
+
+        if not main_char:
+            return
+
+        if main_char.alliance_ticker is not None:
+            footer_string = f"{main_char.character_name}  [{main_char.corporation_ticker}] - [{main_char.alliance_ticker}]"
+        else:
+            footer_string = f"{main_char.character_name}  [{main_char.corporation_ticker}]"
+
+        for k in pk_set:
+            group = Group.objects.get(id=k)
+            hooks = GroupSignal.objects.filter(group=group).select_related('webhook')       
+
+            if not hooks.exists():
+                continue
+            
+            if action == 'post_add':
+                embed = {
+                    'title': "Group Joined",
+                    'description': f"**{main_char.character_name}** joined **{group.name}**",
+                    'color': BLUE,
+                    'image': {'url': main_char.portrait_url_128},
+                    "footer": {
+                        "icon_url": main_char.portrait_url_64,
+                        "text": footer_string
+                    }
+                }
+            else:
+                embed = {
+                    'title': "Group Left",
+                    'description': f"**{main_char.character_name}** left **{group.name}**",
+                    'color': BLUE,
+                    'image': {'url': main_char.portrait_url_128},
+                    "footer": {
+                        "icon_url": main_char.portrait_url_64,
+                        "text": footer_string
+                    }
+                }
+            for hook in hooks:
+                if hook.webhook.enabled:
+                    hook.webhook.send_embed(embed)            
+
+    except Exception as e:
+        logger.error(e)
+        pass  # shits fucked... Don't worry about it...
 
 
 @receiver(post_save, sender=GroupRequest)
