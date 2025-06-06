@@ -68,7 +68,7 @@ def group_change(sender, instance, action, reverse, model, pk_set, **kwargs):
             footer_string = f"{main_char.character_name}  [{main_char.corporation_ticker}]"
 
         for k in pk_set:
-            group = Group.object.get(id=k)
+            group = Group.objects.get(id=k)
             hooks = GroupSignal.objects.filter(group=group).select_related('webhook')       
 
             if not hooks.exists():
