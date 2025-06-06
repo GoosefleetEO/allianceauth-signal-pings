@@ -80,7 +80,6 @@ def group_change(sender, instance, action, reverse, model, pk_set, **kwargs):
                     'description': f"From **{main_char.character_name}** joined **{group.name}**",
                     'color': BLUE,
                     'image': {'url': main_char.portrait_url_128},
-                    'url': url,
                     "footer": {
                         "icon_url": main_char.portrait_url_64,
                         "text": footer_string
@@ -92,7 +91,6 @@ def group_change(sender, instance, action, reverse, model, pk_set, **kwargs):
                     'description': f"From **{main_char.character_name}** left **{group.name}**",
                     'color': BLUE,
                     'image': {'url': main_char.portrait_url_128},
-                    'url': url,
                     "footer": {
                         "icon_url": main_char.portrait_url_64,
                         "text": footer_string
