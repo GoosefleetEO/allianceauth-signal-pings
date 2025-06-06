@@ -21,7 +21,7 @@ from .app_settings import (
 from .helpers import time_helpers
 from .models import (
     CharacterSignal, FleetSignal, GroupSignal, HRAppSignal, SRPSignal,
-    TimerSignal,
+    TimerSignal, StateSignal,
 )
 
 logger = get_extension_logger(__name__)
@@ -197,7 +197,7 @@ def state_change(sender, instance, raw, using, update_fields, **kwargs):
             'url': url
         }
 
-        hooks = CharacterSignal.objects.all().select_related('webhook')
+        hooks = StateSignal.objects.all().select_related('webhook')
 
         if 'state' in update_fields:
             for hook in hooks:
